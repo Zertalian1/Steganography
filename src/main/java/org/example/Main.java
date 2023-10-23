@@ -44,7 +44,7 @@ public class Main {
         BufferedImage img = ImageIO.read(new File(inputFileName));
         System.out.println("Enter Input Text Size");
         String textSize = scanner.nextLine();
-        String foundText = ImageProcess.extractHiddenBytes(img, textSize.isEmpty()? null:Integer.getInteger(textSize));
+        String foundText = ImageProcess.extractHiddenBytes(img, textSize.isEmpty()? null:Integer.parseInt(textSize));
         System.out.printf("Found Hidden Text: %s%n", foundText);
     }
 
@@ -52,6 +52,7 @@ public class Main {
         String text = Files.readString(Path.of("./src/main/resources/War and Peace.txt"), StandardCharsets.UTF_8);
         BufferedImage img = ImageIO.read(new File(defaultInputFileName));
         BufferedImage imgWithText = ImageProcess.hideText(img, text.getBytes(StandardCharsets.UTF_8));
+        ImageIO.write(imgWithText, "png", new File(defaultOutputFileName));
         String fText = ImageProcess.extractHiddenBytes(imgWithText, text.length());
         String substr = text.substring(0, fText.length());
         if (substr.equals(fText)) {
